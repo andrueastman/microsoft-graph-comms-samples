@@ -57,7 +57,7 @@ namespace Sample.HueBot.Bot
 
             builder.SetAuthenticationProvider(authProvider);
             builder.SetNotificationUrl(options.BotBaseUrl.ReplacePort(options.BotBaseUrl.Port + serviceContext.NodeInstance()));
-            MediaCommunicationsClientBuilderExtensions.SetMediaPlatformSettings(builder, this.MediaInit(options, serviceContext));
+            builder.SetMediaPlatformSettings(this.MediaInit(options, serviceContext));
             builder.SetServiceBaseUrl(options.PlaceCallEndpointUrl);
             this.logger.Info($"Building client");
             this.Client = builder.Build();
@@ -126,9 +126,6 @@ namespace Sample.HueBot.Bot
                 (chatInfo, meetingInfo) = JoinInfo.ParseJoinURL(joinCallBody.JoinURL);
                 this.logger.Info($"Chat info " + chatInfo.MessageId);
                 this.logger.Info($"Chat info " + chatInfo.ThreadId);
-                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Count);
-                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Keys);
-                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Values);
             }
 
             this.logger.Info($"Creating media session client");
