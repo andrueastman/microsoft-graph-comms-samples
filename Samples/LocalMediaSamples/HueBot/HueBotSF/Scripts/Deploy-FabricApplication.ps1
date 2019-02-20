@@ -220,6 +220,8 @@ if ($CopyPackageTimeoutSec)
     $PublishParameters['CopyPackageTimeoutSec'] = $CopyPackageTimeoutSec
 }
 
+$PublishParameters['CopyPackageTimeoutSec'] = 100 
+
 if ($IsUpgrade)
 {
     $Action = "RegisterAndUpgrade"

@@ -1,9 +1,9 @@
-$subscriptionName="%replace_with_azure_subscription_name%"
-$resourceGroupName="huebotsf02"
-$keyvaultName="%replace_with_azure_keyvault_name%"
-$parameterFilePath="%replace_with_path_to_repos_folder%\service-shared_platform_samples\LocalMediaSamples\HueBot\HueBot\ARM_Deployment\AzureDeploy.Parameters.json"
-$templateFilePath="%replace_with_path_to_repos_folder%\service-shared_platform_samples\LocalMediaSamples\HueBot\HueBot\ARM_Deployment\AzureDeploy.json"
-$secretID="%replace_with_secret_id_of_certificate_from_keyvault%"
+$subscriptionName="ed43f29e-6445-4614-9829-d92b5ac46d51"
+$resourceGroupName="tests"
+$keyvaultName="bots"
+$parameterFilePath="C:\Users\v-anomon\Documents\microsoft-graph-comms-samples\Samples\LocalMediaSamples\HueBot\HueBot\ARM_Deployment\AzureDeploy.Parameters.json"
+$templateFilePath="C:\Users\v-anomon\Documents\microsoft-graph-comms-samples\Samples\LocalMediaSamples\HueBot\HueBot\ARM_Deployment\AzureDeploy.json"
+$secretID="https://bots.vault.azure.net/secrets/test-certificate/379eed1339414de98f0da88c0a1f2064"
 
 Connect-AzureRmAccount
 Select-AzureRmSubscription -SubscriptionName $subscriptionName

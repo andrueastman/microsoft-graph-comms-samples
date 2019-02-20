@@ -17,6 +17,7 @@
         <Program>Startup.cmd</Program>
         <Arguments></Arguments>
         <WorkingFolder>CodePackage</WorkingFolder>
+        <ConsoleRedirection FileMaxSizeInKb="100000"/>
       </ExeHost>
     </SetupEntryPoint>
     <EntryPoint>

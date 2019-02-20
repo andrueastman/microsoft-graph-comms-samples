@@ -7,7 +7,7 @@
   "parameters": {
     "clusterLocation": {
       "type": "string",
-      "defaultValue": "westus",
+      "defaultValue": "centralus",
       "metadata": {
         "description": "Location of the Cluster"
       }
@@ -153,7 +153,7 @@
     },
     "nt0InstanceCount": {
       "type": "int",
-      "defaultValue": 5,
+      "defaultValue": 3,
       "metadata": {
         "description": "Instance count for node type"
       }
@@ -705,7 +705,7 @@
           }
         ],
         "provisioningState": "Default",
-        "reliabilityLevel": "Silver",
+        //"reliabilityLevel": "Bronze",
         "reverseProxyCertificate": {
           "thumbprint": "[parameters('certificateThumbprint')]",
           "x509StoreName": "[parameters('certificateStoreValue')]"

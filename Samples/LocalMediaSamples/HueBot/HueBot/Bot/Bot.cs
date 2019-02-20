@@ -57,10 +57,11 @@ namespace Sample.HueBot.Bot
 
             builder.SetAuthenticationProvider(authProvider);
             builder.SetNotificationUrl(options.BotBaseUrl.ReplacePort(options.BotBaseUrl.Port + serviceContext.NodeInstance()));
-            builder.SetMediaPlatformSettings(this.MediaInit(options, serviceContext));
+            MediaCommunicationsClientBuilderExtensions.SetMediaPlatformSettings(builder, this.MediaInit(options, serviceContext));
             builder.SetServiceBaseUrl(options.PlaceCallEndpointUrl);
-
+            this.logger.Info($"Building client");
             this.Client = builder.Build();
+            this.logger.Info($"Client built");
 
             this.Client.Calls().OnIncoming += this.CallsOnIncoming;
             this.Client.Calls().OnUpdated += this.CallsOnUpdated;
@@ -123,9 +124,16 @@ namespace Sample.HueBot.Bot
             else
             {
                 (chatInfo, meetingInfo) = JoinInfo.ParseJoinURL(joinCallBody.JoinURL);
+                this.logger.Info($"Chat info " + chatInfo.MessageId);
+                this.logger.Info($"Chat info " + chatInfo.ThreadId);
+                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Count);
+                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Keys);
+                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Values);
             }
 
+            this.logger.Info($"Creating media session client");
             ILocalMediaSession mediaSession = this.CreateLocalMediaSession();
+            this.logger.Info($"media session client created");
             var joinParams = new JoinMeetingParameters(chatInfo, meetingInfo, mediaSession)
             {
                 RemoveFromDefaultAudioRoutingGroup = joinCallBody.RemoveFromDefaultRoutingGroup,
@@ -273,6 +281,9 @@ namespace Sample.HueBot.Bot
         /// <returns>The <see cref="ILocalMediaSession"/>.</returns>
         private ILocalMediaSession CreateLocalMediaSession(Guid mediaSessionId = default(Guid))
         {
+            mediaSessionId = Guid.NewGuid();
+            this.logger.Info("Creating local media session: " + this.Client.AppId);
+            this.logger.Info("Creating guid: " + mediaSessionId);
             var mediaSession = this.Client.CreateMediaSession(
                 new AudioSocketSettings
                 {
@@ -302,6 +313,7 @@ namespace Sample.HueBot.Bot
                     },
                 },
                 mediaSessionId: mediaSessionId);
+
             return mediaSession;
         }
 
@@ -335,12 +347,14 @@ namespace Sample.HueBot.Bot
             var instanceNumber = serviceContext.NodeInstance();
             var publicMediaUrl = options.BotMediaProcessorUrl ?? options.BotBaseUrl;
 
+            this.logger.Info("Public Media url: " + publicMediaUrl.Host);
             var instanceAddresses = Dns.GetHostEntry(publicMediaUrl.Host).AddressList;
             if (instanceAddresses.Length == 0)
             {
                 throw new InvalidOperationException("Could not resolve the PIP hostname. Please make sure that PIP is properly configured for the service");
             }
 
+            this.logger.Info("Public Media Port: " + publicMediaUrl.Port + instanceNumber);
             return new MediaPlatformSettings()
             {
                 MediaPlatformInstanceSettings = new MediaPlatformInstanceSettings()

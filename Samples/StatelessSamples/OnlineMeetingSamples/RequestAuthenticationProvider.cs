@@ -55,7 +55,7 @@ namespace Sample.OnlineMeeting
 
             const string BearerPrefix = "Bearer";
             const string ReplaceString = "{tenant}";
-            const string TokenAuthorityMicrosoft = "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token";
+            const string TokenAuthorityMicrosoft = "https://login.microsoftonline.com/{tenant}";
             const string Resource = @"https://graph.microsoft.com";
 
             var tokenLink = TokenAuthorityMicrosoft.Replace(ReplaceString, tenantId);

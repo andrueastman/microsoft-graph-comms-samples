@@ -7,6 +7,7 @@
     <AssemblyName>HueBot</AssemblyName>
     <Platforms>AnyCPU</Platforms>
     <PlatformTarget>x64</PlatformTarget>
+    <UserSecretsId>7d44eddf-9593-4cee-bfb6-37bbe8005829</UserSecretsId>
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Graph.props" />

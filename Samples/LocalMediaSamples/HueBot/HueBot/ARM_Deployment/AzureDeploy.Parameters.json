@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "clusterLocation": {
-      "value": "westus"
+      "value": "centralus"
     },
     "clusterName": {
       "value": "huebotsf02"
@@ -39,7 +39,7 @@
       "value": "My"
     },
     "certificateThumbprint": {
-      "value": ""
+        "value": "7BDDCEF7FDBECAA14AEF52F341AD5A59BA49D414"
     },
     "sourceVaultValue": {
       "value": ""
@@ -57,7 +57,7 @@
       "value": "Standard_LRS"
     },
     "nt0InstanceCount": {
-      "value": 5
+      "value": 2
     },
     "vmNodeType0Size": {
       "value": "Standard_D2_V2"
