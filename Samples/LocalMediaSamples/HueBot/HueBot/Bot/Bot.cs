@@ -56,8 +56,8 @@ namespace Sample.HueBot.Bot
             var builder = new CommunicationsClientBuilder("HueBot", options.AppId, this.logger);
 
             builder.SetAuthenticationProvider(authProvider);
-            builder.SetNotificationUrl(options.BotBaseUrl.ReplacePort(options.BotBaseUrl.Port + serviceContext.NodeInstance()));
-            MediaCommunicationsClientBuilderExtensions.SetMediaPlatformSettings(builder, this.MediaInit(options, serviceContext));
+            builder.SetNotificationUrl(options.BotBaseUrl.ReplacePort(options.BotBaseUrl.Port));
+            builder.SetMediaPlatformSettings(this.MediaInit(options, serviceContext));
             builder.SetServiceBaseUrl(options.PlaceCallEndpointUrl);
             this.logger.Info($"Building client");
             this.Client = builder.Build();
@@ -126,9 +126,6 @@ namespace Sample.HueBot.Bot
                 (chatInfo, meetingInfo) = JoinInfo.ParseJoinURL(joinCallBody.JoinURL);
                 this.logger.Info($"Chat info " + chatInfo.MessageId);
                 this.logger.Info($"Chat info " + chatInfo.ThreadId);
-                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Count);
-                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Keys);
-                this.logger.Info($"Tenant info count" + meetingInfo.AdditionalData.Values);
             }
 
             this.logger.Info($"Creating media session client");
@@ -362,7 +359,7 @@ namespace Sample.HueBot.Bot
                     CertificateThumbprint = options.Certificate,
                     InstanceInternalPort = serviceContext.CodePackageActivationContext.GetEndpoint("MediaPort").Port,
                     InstancePublicIPAddress = new IPAddress(0x0), //// instanceAddresses[0],
-                    InstancePublicPort = publicMediaUrl.Port + instanceNumber,
+                    InstancePublicPort = publicMediaUrl.Port,
                     ServiceFqdn = publicMediaUrl.Host,
                 },
                 ApplicationId = options.AppId,

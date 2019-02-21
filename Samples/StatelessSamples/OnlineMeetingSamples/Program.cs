@@ -13,8 +13,8 @@ namespace Sample.OnlineMeeting
     /// </summary>
     public class Program
     {
-        private static string appSecret = "=V}.LD&e]uWT+/n{Hk}$x/>^:-$^W]Y$xDK=4#|?514&9}G=aYy:TrC^";
-        private static string appId = "a993dc16-d4e0-4647-bd71-3103db2673f1";
+        private static string appSecret = "cnttGVU1=?hnhQPOC2710*%";
+        private static string appId = "12e9b650-49ae-4472-9773-b04757821977";
 
         // private static string meetingId = "_19:meeting_OGY4NTUxYTQtZWQ4Ny00ZDMyLWFkMWEtNzZhMThiNjI1YTZj@thread.v2";
         private static string tenantId = "703acd3b-f147-4de6-81dc-c520e024626d";
@@ -58,6 +58,7 @@ namespace Sample.OnlineMeeting
 
             Console.WriteLine(meetingDetails.Id);
             Console.WriteLine(meetingDetails.ChatInfo.ThreadId);
+            Console.WriteLine(meetingDetails.StartDateTime);
 
             return meetingDetails;
         }

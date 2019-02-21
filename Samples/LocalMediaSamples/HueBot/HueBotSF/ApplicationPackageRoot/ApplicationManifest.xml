@@ -55,8 +55,8 @@
     <!-- The declaration "SecretsCertificate" does not imply that it's needed to access secrets. Instead, the declaration
          should be read as "Certificate for which the service needs access to the private key" which is true for accessing
          secrets, using the certificate as a client certificate for MTLS, etc. -->
-    <SecretsCertificate X509StoreName="MY" X509FindValue="7BDDCEF7FDBECAA14AEF52F341AD5A59BA49D414" Name="HueBotSecretCert" />
+    <SecretsCertificate X509StoreName="MY" X509FindValue="2E20EE737E2ED12526ECC7AE3B0E2264243CA3C1" Name="HueBotSecretCert" />
     <!-- The declaration "EndpointCertificate" implies that it'll be bound to an endpoint -->
-    <EndpointCertificate X509StoreName="MY" X509FindValue="7BDDCEF7FDBECAA14AEF52F341AD5A59BA49D414" Name="HueBotCert" />
+    <EndpointCertificate X509StoreName="MY" X509FindValue="2E20EE737E2ED12526ECC7AE3B0E2264243CA3C1" Name="HueBotCert" />
   </Certificates>
 </ApplicationManifest>

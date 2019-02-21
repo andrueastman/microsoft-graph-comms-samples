@@ -90,6 +90,7 @@ namespace Sample.Common.Authentication
 
             // If no tenant was specified, we craft the token link using the common tenant.
             // https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols#endpoints
+            this.graphLogger.Info("Tenant ID: " + tenant);
             tenant = string.IsNullOrWhiteSpace(tenant) ? "common" : tenant;
             var tokenLink = oauthV2TokenLink.Replace(replaceString, tenant);
 

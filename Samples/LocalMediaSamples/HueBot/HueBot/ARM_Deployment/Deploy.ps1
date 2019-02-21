@@ -1,9 +1,9 @@
 $subscriptionName="ed43f29e-6445-4614-9829-d92b5ac46d51"
 $resourceGroupName="tests"
-$keyvaultName="bots"
+$keyvaultName="andrueastman-keys"
 $parameterFilePath="C:\Users\v-anomon\Documents\microsoft-graph-comms-samples\Samples\LocalMediaSamples\HueBot\HueBot\ARM_Deployment\AzureDeploy.Parameters.json"
 $templateFilePath="C:\Users\v-anomon\Documents\microsoft-graph-comms-samples\Samples\LocalMediaSamples\HueBot\HueBot\ARM_Deployment\AzureDeploy.json"
-$secretID="https://bots.vault.azure.net/secrets/test-certificate/379eed1339414de98f0da88c0a1f2064"
+$secretID="https://andrueastman-keys.vault.azure.net/secrets/bot-andrueastman-com/8e652a9630e74be18f62cb783ea61585"
 
 Connect-AzureRmAccount
 Select-AzureRmSubscription -SubscriptionName $subscriptionName
