@@ -20,7 +20,7 @@
                                     AzureActiveDirectory="true"
                                     ServerCertThumbprint="0123456789012345678901234567890123456789" />
   -->
-  <ClusterConnectionParameters ConnectionEndpoint="huebotsf02.centralus.cloudapp.azure.com:19000" X509Credential="true" ServerCertThumbprint="2E20EE737E2ED12526ECC7AE3B0E2264243CA3C1" FindType="FindByThumbprint" FindValue="2E20EE737E2ED12526ECC7AE3B0E2264243CA3C1" StoreLocation="LocalMachine" StoreName="My" />
+  <ClusterConnectionParameters ConnectionEndpoint="huebotsf02.centralus.cloudapp.azure.com:19000" X509Credential="true" ServerCertThumbprint="48C5710368E4B1FE47EC10571095AC25C526E127" FindType="FindByThumbprint" FindValue="48C5710368E4B1FE47EC10571095AC25C526E127" StoreLocation="LocalMachine" StoreName="My" />
   <ApplicationParameterFile Path="..\ApplicationParameters\Cloud.xml" />
   <CopyPackageParameters CompressPackage="true" />
   <UpgradeDeployment Mode="Monitored" Enabled="false">

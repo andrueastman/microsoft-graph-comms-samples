@@ -56,7 +56,7 @@ namespace Sample.HueBot.Bot
             var builder = new CommunicationsClientBuilder("HueBot", options.AppId, this.logger);
 
             builder.SetAuthenticationProvider(authProvider);
-            builder.SetNotificationUrl(options.BotBaseUrl.ReplacePort(options.BotBaseUrl.Port));
+            builder.SetNotificationUrl(options.BotBaseUrl.ReplacePort(options.BotBaseUrl.Port + serviceContext.NodeInstance()));
             builder.SetMediaPlatformSettings(this.MediaInit(options, serviceContext));
             builder.SetServiceBaseUrl(options.PlaceCallEndpointUrl);
             this.logger.Info($"Building client");
@@ -359,7 +359,7 @@ namespace Sample.HueBot.Bot
                     CertificateThumbprint = options.Certificate,
                     InstanceInternalPort = serviceContext.CodePackageActivationContext.GetEndpoint("MediaPort").Port,
                     InstancePublicIPAddress = new IPAddress(0x0), //// instanceAddresses[0],
-                    InstancePublicPort = publicMediaUrl.Port,
+                    InstancePublicPort = publicMediaUrl.Port + instanceNumber,
                     ServiceFqdn = publicMediaUrl.Host,
                 },
                 ApplicationId = options.AppId,
