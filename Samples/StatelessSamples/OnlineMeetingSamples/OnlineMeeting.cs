@@ -1,4 +1,4 @@
-﻿// <copyright file="OnlineMeeting.cs" company="Microsoft Corporation">
+// <copyright file="OnlineMeeting.cs" company="Microsoft Corporation">
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 // </copyright>
@@ -16,14 +16,14 @@ namespace Sample.OnlineMeeting
     public class OnlineMeeting
     {
         private Uri graphEndpointUri;
-        private IRequestAuthenticationProvider requestAuthenticationProvider;
+        private IAuthenticationProvider requestAuthenticationProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OnlineMeeting"/> class.
         /// </summary>
         /// <param name="requestAuthenticationProvider">The request authentication provider.</param>
         /// <param name="graphUri">The graph url.</param>
-        public OnlineMeeting(IRequestAuthenticationProvider requestAuthenticationProvider, Uri graphUri)
+        public OnlineMeeting(IAuthenticationProvider requestAuthenticationProvider, Uri graphUri)
         {
             this.requestAuthenticationProvider = requestAuthenticationProvider;
             this.graphEndpointUri = graphUri;
@@ -102,7 +102,7 @@ namespace Sample.OnlineMeeting
                 request.Headers.Add(CoreConstants.Headers.ScenarioId, correlationId.ToString());
                 request.Headers.Add(CoreConstants.Headers.ClientRequestId, Guid.NewGuid().ToString());
 
-                await this.requestAuthenticationProvider.AuthenticateOutboundRequestAsync(request, tenantId)
+                await this.requestAuthenticationProvider.AuthenticateRequestAsync(request)
                     .ConfigureAwait(false);
             });
         }
