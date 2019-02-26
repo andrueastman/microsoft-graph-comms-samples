@@ -15,7 +15,7 @@ namespace Sample.Common.Authentication
     using Microsoft.Graph.Communications.Client.Authentication;
     using Microsoft.Graph.Communications.Common;
     using Microsoft.Graph.Communications.Common.Telemetry;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.Identity.Client;
     using Microsoft.IdentityModel.Protocols;
     using Microsoft.IdentityModel.Protocols.OpenIdConnect;
     using Microsoft.IdentityModel.Tokens;
@@ -56,6 +56,8 @@ namespace Sample.Common.Authentication
         /// </summary>
         private OpenIdConnectConfiguration openIdConfiguration;
 
+        private ConfidentialClientApplication clientApplication;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationProvider" /> class.
         /// </summary>
@@ -83,24 +85,20 @@ namespace Sample.Common.Authentication
         /// </returns>
         public async Task AuthenticateOutboundRequestAsync(HttpRequestMessage request, string tenant)
         {
-            const string schema = "Bearer";
             const string replaceString = "{tenant}";
-            const string oauthV2TokenLink = "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token";
-            const string resource = "https://graph.microsoft.com";
+            const string authority = "https://login.microsoftonline.com/{tenant}";
+            const string redirectUrl = "https://login.microsoftonline.com/";
 
             // If no tenant was specified, we craft the token link using the common tenant.
             // https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols#endpoints
             tenant = string.IsNullOrWhiteSpace(tenant) ? "common" : tenant;
-            var tokenLink = oauthV2TokenLink.Replace(replaceString, tenant);
-
+            var tokenLink = authority.Replace(replaceString, tenant);
+            this.clientApplication = new ConfidentialClientApplication(this.appId, tokenLink, redirectUrl, new ClientCredential(this.appSecret), new TokenCache(), new TokenCache());
             this.graphLogger.Info("AuthenticationProvider: Refreshing OAuth token.");
-            var context = new AuthenticationContext(tokenLink);
-            var creds = new ClientCredential(this.appId, this.appSecret);
-
-            AuthenticationResult result;
+            AuthenticationResult authenticationResult = null;
             try
             {
-                result = await context.AcquireTokenAsync(resource, creds).ConfigureAwait(false);
+                authenticationResult = await this.clientApplication.AcquireTokenForClientAsync(new string[] { "https://graph.microsoft.com/.default" }).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -108,9 +106,9 @@ namespace Sample.Common.Authentication
                 throw;
             }
 
-            this.graphLogger.Info($"AuthenticationProvider: OAuth token cached. Expires in {result.ExpiresOn.Subtract(DateTimeOffset.UtcNow).TotalMinutes} minutes.");
+            this.graphLogger.Info($"AuthenticationProvider: OAuth token cached. Expires in {authenticationResult.ExpiresOn.Subtract(DateTimeOffset.UtcNow).TotalMinutes} minutes.");
 
-            request.Headers.Authorization = new AuthenticationHeaderValue(schema, result.AccessToken);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authenticationResult.AccessToken);
         }
 
         /// <summary>
