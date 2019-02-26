@@ -23,7 +23,9 @@ namespace Sample.OnlineMeeting
         /// <returns> The onlinemeeting details. </returns>
         public static async Task<Microsoft.Graph.OnlineMeeting> GetOnlineMeetingAsync(ApplicationConfig applicationConfig, IAuthenticationProvider authenticationProvider)
         {
-            var onlineMeeting = new OnlineMeeting(authenticationProvider, new Uri(applicationConfig.MicrosoftGraphBaseEndpoint));
+            var onlineMeeting = new OnlineMeeting(
+                authenticationProvider,
+                new Uri(applicationConfig.MicrosoftGraphBaseEndpoint));
 
             var meetingDetails = await onlineMeeting.GetOnlineMeetingAsync(
                 applicationConfig.TenantId,
@@ -45,8 +47,15 @@ namespace Sample.OnlineMeeting
         /// <returns> The newly created onlinemeeting. </returns>
         public static async Task<Microsoft.Graph.OnlineMeeting> CreateOnlineMeetingAsync(ApplicationConfig applicationConfig, IAuthenticationProvider authenticationProvider)
         {
-            var onlineMeeting = new OnlineMeeting(authenticationProvider, new Uri(applicationConfig.MicrosoftGraphBaseEndpoint));
-            var meetingDetails = await onlineMeeting.CreateOnlineMeetingAsync(applicationConfig.TenantId, applicationConfig.OrganizerId, default(Guid)).ConfigureAwait(false);
+            var onlineMeeting = new OnlineMeeting(
+                authenticationProvider,
+                new Uri(applicationConfig.MicrosoftGraphBaseEndpoint));
+
+            var meetingDetails = await onlineMeeting.CreateOnlineMeetingAsync(
+                applicationConfig.TenantId,
+                applicationConfig.OrganizerId,
+                default(Guid))
+                .ConfigureAwait(false);
 
             Console.WriteLine(meetingDetails.Id);
             Console.WriteLine(meetingDetails.ChatInfo.ThreadId);
@@ -62,13 +71,23 @@ namespace Sample.OnlineMeeting
         {
             ApplicationConfig appConfiguration = ApplicationConfig.ReadFromJsonFile("appsettings.json");
 
-            ConfidentialClientApplication confidentialClientApplication = new ConfidentialClientApplication(appConfiguration.ClientId, appConfiguration.Authority, appConfiguration.RedirectUrl, new ClientCredential(appConfiguration.ClientSecret), new TokenCache(), new TokenCache());
-            IAuthenticationProvider authenticationProvider = new MsalAuthenticationProvider(confidentialClientApplication, new string[] { "https://graph.microsoft.com/.default" });
+            ConfidentialClientApplication confidentialClientApplication = new ConfidentialClientApplication(
+                appConfiguration.ClientId,
+                appConfiguration.Authority,
+                appConfiguration.RedirectUrl,
+                new ClientCredential(appConfiguration.ClientSecret),
+                new TokenCache(),
+                new TokenCache());
+
+            IAuthenticationProvider authenticationProvider = new MsalAuthenticationProvider(
+                confidentialClientApplication,
+                new string[] { "https://graph.microsoft.com/.default" });
+
             Task.Run(async () =>
             {
                 try
                 {
-                    // var meetingDetails = await GetOnlineMeetingAsync(appConfiguration, authenticationProvider).ConfigureAwait(false);
+                    var meetingDetails = await GetOnlineMeetingAsync(appConfiguration, authenticationProvider).ConfigureAwait(false);
                     var createdMeetingDetails = await CreateOnlineMeetingAsync(appConfiguration, authenticationProvider).ConfigureAwait(false);
                 }
                 catch (Exception ex)
